@@ -58,10 +58,27 @@ const publishPost = async () => {
   }
 };
 
-const formatDate = (date: string) => {
-  const parsedDate = parseISO(date);
-  return formatDistanceToNow(parsedDate, { addSuffix: true });
-};
+function formatDate(date: string | null): string {
+  if (!date) return '';
+
+  const now = new Date();
+  const targetDate = new Date(date);
+
+  const diffInMinutes = Math.floor((now.getTime() - targetDate.getTime()) / 60000);
+  if (diffInMinutes < 1) {
+    return 'Just now';
+  }
+  if (diffInMinutes < 60) {
+    return 'Less than 1 hour ago';
+  }
+
+  const today = new Date();
+  if (targetDate.toDateString() === today.toDateString()) {
+    return targetDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
+  return targetDate.toLocaleString([], { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+}
 </script>
 
 <template>

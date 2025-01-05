@@ -35,6 +35,7 @@ const currentYear = ref(new Date().getFullYear());
 @media (max-width: 1024px) {
   #app {
     padding: 1rem;
+    min-width: auto;
   }
 }
 
